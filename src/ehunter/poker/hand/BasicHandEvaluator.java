@@ -15,6 +15,8 @@ public class BasicHandEvaluator implements HandEvaluator {
     public static final int ONE_PAIR_BASE_VALUE = 1_000_000;
     public static final int HIGH_CARD_BASE_VALUE = 0;
 
+    public static final int HIGHEST_VALUE = 13;
+
 
     @Override
     public HandValue evaluateHand(Hand h) {
@@ -59,7 +61,11 @@ public class BasicHandEvaluator implements HandEvaluator {
     }
 
     private HandValue value3OfAKind(Hand h) { //Set?
-        return null;
+        h.sortByValue();
+
+        //3rd card in hand will always be part of the 3... means card[2]
+
+        return new HandValue(h, HandType.THREE_OF_A_KIND, h.getCards()[2].getValue().getCardValue() * THREE_OF_A_KIND_BASE_VALUE);
     }
 
     private HandValue value2Pair(Hand h) {
@@ -71,7 +77,16 @@ public class BasicHandEvaluator implements HandEvaluator {
     }
 
     private HandValue valueHighCard(Hand h) {
-        return null;
+        h.sortByValue();
+
+        int value = 0;
+        for (int i = 0; i < h.getCards().length; i++) {
+            int val = h.getCards()[i].getValue().getCardValue();
+
+            value += val * Math.pow(HIGHEST_VALUE, i);
+        }
+
+        return new HandValue(h, HandType.HIGH_CARD, value + HIGH_CARD_BASE_VALUE);
     }
 
     private HandValue valueFullHouse(Hand h) {
