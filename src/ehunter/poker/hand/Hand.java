@@ -137,4 +137,14 @@ public class Hand {
     public void sortByValue() {
         Arrays.sort(getCards(), new ValueComparator());
     }
+
+    public static Card[] sortCardArrayBySuit(Card[] cards) {
+        Arrays.sort(cards, new SuitComparator());
+        return cards;
+    }
+
+    public static Card[] sortCardArrayByValue(Card[] cards) {
+        Arrays.sort(cards, new ValueComparator());
+        return cards;
+    }
 }

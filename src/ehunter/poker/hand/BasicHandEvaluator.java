@@ -73,7 +73,27 @@ public class BasicHandEvaluator implements HandEvaluator {
     }
 
     private HandValue valuePair(Hand h) {
-        return null;
+        h.sortByValue();
+        Card[] cards = h.getCards();
+        int v = 0;
+        if (cards[0] == cards[1]) {
+            v = valuePair(new Card[]{cards[0], cards[1]}, new Card[]{cards[2], cards[3], cards[4]});
+        } else if (cards[1] == cards[2]) {
+            v = valuePair(new Card[]{cards[1], cards[2]}, new Card[]{cards[0], cards[3], cards[4]});
+        } else if (cards[2] == cards[3]) {
+            v = valuePair(new Card[]{cards[2], cards[3]}, new Card[]{cards[0], cards[1], cards[4]});
+        } else if (cards[3] == cards[4]) {
+            v = valuePair(new Card[]{cards[3], cards[4]}, new Card[]{cards[0], cards[1], cards[2]});
+        }
+
+        return new HandValue(h, HandType.ONE_PAIR, ONE_PAIR_BASE_VALUE + v);
+    }
+    //unmatched will always be length 3
+    private int valuePair(Card[] matched, Card[] unmtached) {
+        unmtached = Hand.sortCardArrayByValue(unmtached);
+
+        return weight(3)*matched[0].getValue().getCardValue() + weight(2)*unmtached[2].getValue().getCardValue()
+                + weight(1)*unmtached[1].getValue().getCardValue() + weight(0)*unmtached[0].getValue().getCardValue();
     }
 
     private HandValue valueHighCard(Hand h) {
@@ -91,5 +111,9 @@ public class BasicHandEvaluator implements HandEvaluator {
 
     private HandValue valueFullHouse(Hand h) {
         return null;
+    }
+
+    private int weight(int weight) {
+        return (int)Math.pow(HIGHEST_VALUE, weight);
     }
 }
