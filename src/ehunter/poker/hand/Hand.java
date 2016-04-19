@@ -13,6 +13,21 @@ public class Hand {
     private Card[] cards;
     //Contains all data for a single hand
 
+    public Hand() {
+        cards = new Card[5];
+    }
+
+    public Hand(Card[] cards) {
+        this.cards = cards;
+    }
+
+    public void setCard(Card c, int index) {
+        cards[index] = c;
+    }
+
+    public Card getCard(int index) {
+        return cards[index];
+    }
 
     public Card[] getCards() {
         return cards;
@@ -21,7 +36,7 @@ public class Hand {
     public static boolean isFullHouse(Hand h) {
         h.sortByValue();
 
-        Card[] cards = h.getCards();
+        int[] cards = getCardValues(h.getCards());
 
         //xxxyy
         boolean lower = (cards[0] == cards[1]) && (cards[1] == cards[2]) && (cards[3] == cards[4]);
@@ -146,5 +161,15 @@ public class Hand {
     public static Card[] sortCardArrayByValue(Card[] cards) {
         Arrays.sort(cards, new ValueComparator());
         return cards;
+    }
+
+    public static int[] getCardValues(Card[] c) {
+        int[] values = new int[c.length];
+
+        for (int i  = 0; i < c.length; i++) {
+            values[i] = c[i].getValue().getCardValue();
+        }
+
+        return values;
     }
 }

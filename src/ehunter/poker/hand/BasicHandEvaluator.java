@@ -67,22 +67,41 @@ public class BasicHandEvaluator implements HandEvaluator {
 
         return new HandValue(h, HandType.THREE_OF_A_KIND, h.getCards()[2].getValue().getCardValue() * THREE_OF_A_KIND_BASE_VALUE);
     }
-
+    
     private HandValue value2Pair(Hand h) {
-        return null;
+        h.sortByValue();
+        Card[] c = h.getCards();
+        int value = 0;
+        if (c[0].getValue().getCardValue() == c[1].getValue().getCardValue() &&
+                c[2].getValue().getCardValue() == c[3].getValue().getCardValue()) {
+            value = value2Pair(c[2], c[0], c[4]);
+        } else if (c[0].getValue().getCardValue() == c[1].getValue().getCardValue() &&
+                c[3].getValue().getCardValue() == c[4].getValue().getCardValue()) {
+            value = value2Pair(c[3], c[0], c[2]);
+        } else if (c[1].getValue().getCardValue() == c[2].getValue().getCardValue() &&
+                c[3].getValue().getCardValue() == c[4].getValue().getCardValue()) {
+            value = value2Pair(c[3], c[1], c[0]);
+        }
+
+        return new HandValue(h, HandType.TWO_PAIR, value +  TWO_PAIR_BASE_VALUE);
+    }
+
+    private int value2Pair(Card highMatch, Card lowMatch, Card unmatched) {
+        return weight(2)*highMatch.getValue().getCardValue() + weight(1)*lowMatch.getValue().getCardValue()
+                + weight(0) * unmatched.getValue().getCardValue();
     }
 
     private HandValue valuePair(Hand h) {
         h.sortByValue();
         Card[] cards = h.getCards();
         int v = 0;
-        if (cards[0] == cards[1]) {
+        if (cards[0].getValue().getCardValue() == cards[1].getValue().getCardValue()) {
             v = valuePair(new Card[]{cards[0], cards[1]}, new Card[]{cards[2], cards[3], cards[4]});
-        } else if (cards[1] == cards[2]) {
+        } else if (cards[1].getValue().getCardValue() == cards[2].getValue().getCardValue()) {
             v = valuePair(new Card[]{cards[1], cards[2]}, new Card[]{cards[0], cards[3], cards[4]});
-        } else if (cards[2] == cards[3]) {
+        } else if (cards[2].getValue().getCardValue() == cards[3].getValue().getCardValue()) {
             v = valuePair(new Card[]{cards[2], cards[3]}, new Card[]{cards[0], cards[1], cards[4]});
-        } else if (cards[3] == cards[4]) {
+        } else if (cards[3].getValue().getCardValue() == cards[4].getValue().getCardValue()) {
             v = valuePair(new Card[]{cards[3], cards[4]}, new Card[]{cards[0], cards[1], cards[2]});
         }
 
