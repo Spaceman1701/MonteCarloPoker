@@ -8,9 +8,9 @@ import java.util.Comparator;
 public class SuitComparator implements Comparator<Card> {
     @Override
     public int compare(Card c1, Card c2) {
-        if (c1.getValue().getSortingValue() > c2.getValue().getSortingValue()) {
+        if (c1.getSuit().getSortingValue() > c2.getSuit().getSortingValue()) {
             return 1;
-        } else if (c1.getValue().getSortingValue() < c2.getValue().getSortingValue()) {
+        } else if (c1.getSuit().getSortingValue() < c2.getSuit().getSortingValue()) {
             return -1;
         }
 

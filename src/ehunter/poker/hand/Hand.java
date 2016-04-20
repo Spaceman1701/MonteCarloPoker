@@ -18,7 +18,7 @@ public class Hand {
     }
 
     public Hand(Card[] cards) {
-        this.cards = cards;
+        this.cards = Arrays.copyOf(cards, cards.length);
     }
 
     public void setCard(Card c, int index) {
@@ -53,7 +53,7 @@ public class Hand {
 
         Card[] cards = h.getCards();
 
-        int testRank = cards[0].getValue().getSortingValue() + 1;
+        int testRank = cards[0].getValue().getSortingValue();
 
         for (Card c : cards) {
             if (c.getValue().getSortingValue() != testRank) {
@@ -68,7 +68,7 @@ public class Hand {
     public static boolean isFlush(Hand h) {
         h.sortBySuit();
 
-        return h.getCards()[0] == h.getCards()[4];
+        return h.getCards()[0].getSuit() == h.getCards()[4].getSuit();
     }
 
     public static boolean is4OfAKind(Hand h) {
