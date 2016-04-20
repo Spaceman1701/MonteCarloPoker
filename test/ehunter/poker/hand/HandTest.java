@@ -1,27 +1,30 @@
 package ehunter.poker.hand;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.util.Arrays;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by 40501 on 4/19/2016.
  */
 public class HandTest {
-    private static final Card[] FULL_HOUSE = new Card[]{
+    public static final Card[] FULL_HOUSE = new Card[]{
             new Card(CardValue.ACE, CardSuit.CLUBS),
             new Card(CardValue.ACE, CardSuit.DIAMONDS),
             new Card(CardValue.ACE, CardSuit.HEARTS),
             new Card(CardValue.KING, CardSuit.SPADES),
             new Card(CardValue.KING, CardSuit.HEARTS)};
-    private static final Card[] HIGH_CARD = new Card[] {
+    public static final Card[] HIGH_CARD = new Card[] {
             new Card(CardValue.ACE, CardSuit.SPADES),
             new Card(CardValue.KING, CardSuit.HEARTS),
             new Card(CardValue.SEVEN, CardSuit.SPADES),
             new Card(CardValue.FOUR, CardSuit.SPADES),
             new Card(CardValue.THREE, CardSuit.SPADES)
     };
-    private static final Card[] ONE_PAIR = new Card[]{
+    public static final Card[] ONE_PAIR = new Card[]{
             new Card(CardValue.JACK, CardSuit.HEARTS),
             new Card(CardValue.JACK, CardSuit.SPADES),
             new Card(CardValue.EIGHT, CardSuit.HEARTS),
@@ -29,7 +32,7 @@ public class HandTest {
             new Card(CardValue.THREE, CardSuit.HEARTS)
     };
 
-    private static final Card[] TWO_PAIR = new Card[]{
+    public static final Card[] TWO_PAIR = new Card[]{
             new Card(CardValue.KING, CardSuit.DIAMONDS),
             new Card(CardValue.KING, CardSuit.SPADES),
             new Card(CardValue.QUEEN, CardSuit.CLUBS),
@@ -37,7 +40,7 @@ public class HandTest {
             new Card(CardValue.TWO, CardSuit.DIAMONDS)
     };
 
-    private static final Card[] THREE_OF_A_KIND = new Card[]{
+    public static final Card[] THREE_OF_A_KIND = new Card[]{
             new Card(CardValue.JACK, CardSuit.HEARTS),
             new Card(CardValue.JACK, CardSuit.SPADES),
             new Card(CardValue.JACK, CardSuit.CLUBS),
@@ -45,7 +48,7 @@ public class HandTest {
             new Card(CardValue.THREE, CardSuit.HEARTS)
     };
 
-    private static final Card[] FOUR_OF_A_KIND = new Card[]{
+    public static final Card[] FOUR_OF_A_KIND = new Card[]{
             new Card(CardValue.JACK, CardSuit.HEARTS),
             new Card(CardValue.JACK, CardSuit.SPADES),
             new Card(CardValue.JACK, CardSuit.CLUBS),
@@ -53,7 +56,7 @@ public class HandTest {
             new Card(CardValue.THREE, CardSuit.HEARTS)
     };
 
-    private static final Card[] FLUSH = new Card[]{
+    public static final Card[] FLUSH = new Card[]{
             new Card(CardValue.ACE, CardSuit.HEARTS),
             new Card(CardValue.TWO, CardSuit.HEARTS),
             new Card(CardValue.KING, CardSuit.HEARTS),
@@ -61,13 +64,16 @@ public class HandTest {
             new Card(CardValue.TEN, CardSuit.HEARTS)
     };
 
-    private static final Card[] STRAIGHT = new Card[]{
+    public static final Card[] STRAIGHT = new Card[]{
             new Card(CardValue.FIVE, CardSuit.HEARTS),
             new Card(CardValue.SIX, CardSuit.DIAMONDS),
             new Card(CardValue.SEVEN, CardSuit.CLUBS),
             new Card(CardValue.EIGHT, CardSuit.HEARTS),
             new Card(CardValue.NINE, CardSuit.SPADES)
     };
+
+    @Rule
+    public ExpectedException expectedEx = ExpectedException.none();
 
     @Test
     public void testIsFullHousePositive() {
