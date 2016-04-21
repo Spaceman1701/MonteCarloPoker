@@ -15,8 +15,8 @@ public class HandTest {
             new Card(CardValue.ACE, CardSuit.CLUBS),
             new Card(CardValue.ACE, CardSuit.DIAMONDS),
             new Card(CardValue.ACE, CardSuit.HEARTS),
-            new Card(CardValue.KING, CardSuit.SPADES),
-            new Card(CardValue.KING, CardSuit.HEARTS)};
+            new Card(CardValue.TEN, CardSuit.SPADES),
+            new Card(CardValue.TEN, CardSuit.HEARTS)};
     public static final Card[] HIGH_CARD = new Card[]{
             new Card(CardValue.ACE, CardSuit.SPADES),
             new Card(CardValue.KING, CardSuit.HEARTS),

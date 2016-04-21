@@ -25,7 +25,7 @@ public class TestBasicHandEvaluator {
     private static final HandEvaluator eval = new BasicHandEvaluator();
 
     @Rule
-    private ExpectedException expectedEx = ExpectedException.none();
+    public ExpectedException expectedEx = ExpectedException.none();
 
     public void valueStraightFlushIntra() {
         //This method probably works since it is just the high card method + a base value
@@ -174,7 +174,6 @@ public class TestBasicHandEvaluator {
                 new Card(CardValue.KING, CardSuit.CLUBS),
                 new Card(CardValue.KING, CardSuit.HEARTS)
         };
-
         assert eval.evaluateHand(new Hand(highestFullHouse)).getValue() < FOUR_OF_A_KIND_BASE_VALUE;
     }
 
@@ -188,7 +187,7 @@ public class TestBasicHandEvaluator {
                 new Card(CardValue.KING, CardSuit.HEARTS)
         };
 
-        assert eval.evaluateHand(new Hand(highestFullHouse)).getValue() < eval.evaluateHand(new Hand(HandTest.FULL_HOUSE)).getValue();
+        assert eval.evaluateHand(new Hand(highestFullHouse)).getValue() > eval.evaluateHand(new Hand(HandTest.FULL_HOUSE)).getValue();
     }
 
     @Test

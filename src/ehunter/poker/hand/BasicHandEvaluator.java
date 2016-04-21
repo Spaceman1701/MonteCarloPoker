@@ -1,5 +1,7 @@
 package ehunter.poker.hand;
 
+import javax.print.attribute.HashDocAttributeSet;
+
 /**
  * Created by 40501 on 4/14/2016.
  */
@@ -45,19 +47,29 @@ public class BasicHandEvaluator implements HandEvaluator {
     }
 
     private HandValue valueStraightFlush(Hand h) {
-        return null;
+        return new HandValue(h, HandType.STRAIGHT_FLUSH, valueHighCard(h).getValue() + STRAIGHT_FLUSH_BASE_VALUE);
     }
 
     private HandValue value4OfAKind(Hand h) {
-        return null;
+        h.sortByValue();
+
+        Card[] c = h.getCards();
+
+        if (c[0].getValue() == c[1].getValue()) { //xxxx y
+            return new HandValue(h, HandType.FOUR_OF_A_KIND, weight(1)*c[0].getValue().getCardValue() +
+                    weight(0) * c[4].getValue().getCardValue() + FOUR_OF_A_KIND_BASE_VALUE);
+        } else { //y xxxx
+            return new HandValue(h, HandType.FOUR_OF_A_KIND, weight(1)*c[4].getValue().getCardValue() +
+                    weight(0) * c[0].getValue().getCardValue() + FOUR_OF_A_KIND_BASE_VALUE);
+        }
     }
 
     private HandValue valueFlush(Hand h) {
-        return null;
+        return new HandValue(h, HandType.FLUSH, valueHighCard(h).getValue() + FLUSH_BASE_VALUE);
     }
 
     private HandValue valueStraight(Hand h) {
-        return null;
+        return new HandValue(h, HandType.STRAIGHT, valueHighCard(h).getValue() + STRAIGHT_BASE_VALUE);
     }
 
     private HandValue value3OfAKind(Hand h) { //Set?
@@ -65,7 +77,7 @@ public class BasicHandEvaluator implements HandEvaluator {
 
         //3rd card in hand will always be part of the 3... means card[2]
 
-        return new HandValue(h, HandType.THREE_OF_A_KIND, h.getCards()[2].getValue().getCardValue() * THREE_OF_A_KIND_BASE_VALUE);
+        return new HandValue(h, HandType.THREE_OF_A_KIND, h.getCards()[2].getValue().getCardValue() + THREE_OF_A_KIND_BASE_VALUE);
     }
     
     private HandValue value2Pair(Hand h) {
@@ -129,7 +141,15 @@ public class BasicHandEvaluator implements HandEvaluator {
     }
 
     private HandValue valueFullHouse(Hand h) {
-        return null;
+        h.sortByValue();
+
+        Card[] c = h.getCards();
+
+        if (c[1].getValue() == c[2].getValue()) { //x[xx] yy
+            return new HandValue(h, HandType.FULL_HOUSE, weight(1)*c[0].getValue().getCardValue() + weight(0)*c[4].getValue().getCardValue() + FULL_HOUSE_BASE_VALUE);
+        } else { //yy xxx
+            return new HandValue(h, HandType.FULL_HOUSE, weight(1)*c[4].getValue().getCardValue() + weight(0)*c[0].getValue().getCardValue() + FULL_HOUSE_BASE_VALUE);
+        }
     }
 
     private int weight(int weight) {
