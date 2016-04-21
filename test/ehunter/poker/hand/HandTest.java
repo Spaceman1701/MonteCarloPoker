@@ -17,7 +17,7 @@ public class HandTest {
             new Card(CardValue.ACE, CardSuit.HEARTS),
             new Card(CardValue.KING, CardSuit.SPADES),
             new Card(CardValue.KING, CardSuit.HEARTS)};
-    public static final Card[] HIGH_CARD = new Card[] {
+    public static final Card[] HIGH_CARD = new Card[]{
             new Card(CardValue.ACE, CardSuit.SPADES),
             new Card(CardValue.KING, CardSuit.HEARTS),
             new Card(CardValue.SEVEN, CardSuit.SPADES),
@@ -74,6 +74,12 @@ public class HandTest {
 
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
+
+    @Test
+    public void testInvalidHandConstructed() {
+        expectedEx.expect(InvalidHandException.class);
+        Hand h = new Hand(new Card[] {new Card(CardValue.JACK, CardSuit.CLUBS)});
+    }
 
     @Test
     public void testIsFullHousePositive() {
@@ -203,7 +209,7 @@ public class HandTest {
 
         Card[] result = h.getCards();
 
-        for(int i = 0; i < result.length; i++) {
+        for (int i = 0; i < result.length; i++) {
             //assert result[i].getValue() == expected[i].getValue();
             assert result[i].getSuit() == expected[i].getSuit();
         }
@@ -225,7 +231,7 @@ public class HandTest {
 
         Card[] result = h.getCards();
 
-        for(int i = 0; i < result.length; i++) {
+        for (int i = 0; i < result.length; i++) {
             assert result[i].getValue() == expected[i].getValue();
             //assert result[i].getSuit() == expected[i].getSuit(); -- May fail even if method works correctly
         }
@@ -245,7 +251,7 @@ public class HandTest {
 
         result = Hand.sortCardArrayBySuit(result);
 
-        for(int i = 0; i < result.length; i++) {
+        for (int i = 0; i < result.length; i++) {
             //assert result[i].getValue() == expected[i].getValue();
             assert result[i].getSuit() == expected[i].getSuit();
         }
@@ -258,32 +264,32 @@ public class HandTest {
                 new Card(CardValue.EIGHT, CardSuit.HEARTS),
                 new Card(CardValue.TEN, CardSuit.HEARTS),
                 new Card(CardValue.KING, CardSuit.HEARTS),
-                new Card(CardValue.ACE, CardSuit.HEARTS)
-        };
+                new Card(CardValue.ACE, CardSuit.HEARTS)};
 
         Card[] result = Arrays.copyOf(expected, expected.length);
 
-        result = Hand.sortCardArrayByValue(result);
-
-        for(int i = 0; i < result.length; i++) {
+        for (int i = 0; i < result.length; i++) {
             assert result[i].getValue() == expected[i].getValue();
             //assert result[i].getSuit() == expected[i].getSuit(); -- May fail even if method works correctly
         }
+
     }
 
     @Test
     public void testGetCardValues() {
-        int[] expected = new int[] {
+        int[] expected = new int[]{
                 CardValue.ACE.getCardValue(),
                 CardValue.KING.getCardValue(),
                 CardValue.SEVEN.getCardValue(),
                 CardValue.FOUR.getCardValue(),
                 CardValue.THREE.getCardValue(),
         };
-
         int[] result = Hand.getCardValues(HIGH_CARD);
 
-        for(int i = 0; i < expected.length; i++) {
+        for (int i = 0; i < expected.length; i++) {
+
+            result = Hand.getCardValues(HIGH_CARD);
+
             assert result[i] == expected[i];
         }
     }

@@ -1,9 +1,6 @@
 package ehunter.poker.hand;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
-import java.util.List;
-import java.util.TreeSet;
 
 /**
  * Created by 40501 on 4/14/2016.
@@ -19,10 +16,17 @@ public class Hand {
 
     public Hand(Card[] cards) {
         this.cards = Arrays.copyOf(cards, cards.length);
+        Hand.checkValidHand(this);
     }
 
     public void setCard(Card c, int index) {
         cards[index] = c;
+    }
+
+    private static void checkValidHand(Hand h) {
+        if (h.getCards().length != 5) {
+            throw new InvalidHandException();
+        }
     }
 
     public Card getCard(int index) {
@@ -34,6 +38,8 @@ public class Hand {
     }
 
     public static boolean isFullHouse(Hand h) {
+        checkValidHand(h);
+
         h.sortByValue();
 
         int[] cards = getCardValues(h.getCards());
@@ -48,6 +54,7 @@ public class Hand {
     }
 
     public static boolean isStraight(Hand h) {
+        checkValidHand(h);
 
         h.sortByValue();
 
@@ -66,12 +73,14 @@ public class Hand {
     }
 
     public static boolean isFlush(Hand h) {
+        checkValidHand(h);
         h.sortBySuit();
 
         return h.getCards()[0].getSuit() == h.getCards()[4].getSuit();
     }
 
     public static boolean is4OfAKind(Hand h) {
+        checkValidHand(h);
         h.sortByValue();
 
         Card[] cards = h.getCards();
@@ -86,8 +95,7 @@ public class Hand {
     }
 
     public static boolean is3OfAKind(Hand h) {
-
-
+        checkValidHand(h);
 
         if (is4OfAKind(h) || isFullHouse(h)) {
             return false; //lets the method be simplified to litterally just look for 3 cards with the same value.
@@ -108,6 +116,7 @@ public class Hand {
     }
 
     public static boolean is2Pair(Hand h) {
+        checkValidHand(h);
 
         if (isFullHouse(h) || is3OfAKind(h) || is4OfAKind(h)) {
             return false;
@@ -128,7 +137,7 @@ public class Hand {
     }
 
     public static boolean isPair(Hand h) {
-
+        checkValidHand(h);
         if (is2Pair(h) || is4OfAKind(h) || isFullHouse(h) || is3OfAKind(h)) {
             return false;
         }
