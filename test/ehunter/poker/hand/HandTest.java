@@ -197,10 +197,11 @@ public class HandTest {
     public void testSortBySuit() {
         Card[] expected = new Card[]{
                 new Card(CardValue.JACK, CardSuit.CLUBS),
-                new Card(CardValue.JACK, CardSuit.SPADES),
+                new Card(CardValue.JACK, CardSuit.DIAMONDS),
+
                 new Card(CardValue.THREE, CardSuit.HEARTS),
                 new Card(CardValue.JACK, CardSuit.HEARTS),
-                new Card(CardValue.JACK, CardSuit.DIAMONDS),
+                new Card(CardValue.JACK, CardSuit.SPADES)
         };
 
         Hand h = new Hand(FOUR_OF_A_KIND);
@@ -241,10 +242,11 @@ public class HandTest {
     public void testSortCardArrayBySuit() {
         Card[] expected = new Card[]{
                 new Card(CardValue.JACK, CardSuit.CLUBS),
-                new Card(CardValue.JACK, CardSuit.SPADES),
+                new Card(CardValue.JACK, CardSuit.DIAMONDS),
+
                 new Card(CardValue.THREE, CardSuit.HEARTS),
                 new Card(CardValue.JACK, CardSuit.HEARTS),
-                new Card(CardValue.JACK, CardSuit.DIAMONDS),
+                new Card(CardValue.JACK, CardSuit.SPADES)
         };
 
         Card[] result = Arrays.copyOf(expected, expected.length);
