@@ -16,7 +16,7 @@ public class SidePot {
 
     public SidePot(int value, Player[] contributors) {
         this.contributors = new HashSet<Player>();
-        this.contributors.addAll(Arrays.asList(contributors));
+        addAllUnfolded(contributors);
     }
 
     private void addAllUnfolded(Player[] contributors) {
@@ -27,12 +27,30 @@ public class SidePot {
         }
     }
 
+    public boolean sharesContributors(SidePot other) {
+        if (other.getContributors().size() != getContributors().size()) {
+            return false;
+        }
+
+        for (Player p : getContributors()) {
+            if (!other.getContributors().contains(p)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public Set<Player> getContributors() {
         return contributors;
     }
 
     public int getValue() {
         return value;
+    }
+
+    public void addValue(int v) {
+        value += v;
     }
 
 }
