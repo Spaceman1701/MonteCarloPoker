@@ -42,9 +42,12 @@ public class Pot {
 
             if (value > sidePotValue) {
                 sidePotValue = value;
-                currentPot = new SidePot(value * contributionSet.size(), getPlayers(contributionSet));
+                currentPot = new SidePot(value * contributionSet.size(),value , getPlayers(contributionSet));
                 pots.add(currentPot);
-
+                for (IndividualContribution c2 : contributions) {
+                    c2.useAmount(value);
+                }
+                sidePotValue = 0;
             }
 
             contributionSet.remove(c);
@@ -56,6 +59,8 @@ public class Pot {
             SidePot potI = pots.get(i);
 
             if (i == pots.size() - 1) {
+                condensedPots.add(potI);
+                System.out.println("add final pot " + potI.getContraValue());
                 break;
             }
 
@@ -63,16 +68,21 @@ public class Pot {
 
             if (potI.sharesContributors(nextPot)) {
                 nextPot.addValue(potI.getValue());
-                condensedPots.add(nextPot);
+                //condensedPots.add(nextPot);
+                System.out.println("pot merged " + potI.getContraValue() + " " + potI.getContributors().size());
             } else {
                 condensedPots.add(potI);
-                condensedPots.add(nextPot);
+                //condensedPots.add(nextPot);
+                System.out.println("pot added " + potI.getContraValue() + " " + potI.getContributors().size());
+
+                //System.out.println("pot added " + nextPot.getContraValue() + " " + nextPot.getContributors().size());
+               // i++;
             }
         }
 
         SidePot[] sidePots = new SidePot[condensedPots.size()];
 
-        pots.toArray(sidePots);
+        condensedPots.toArray(sidePots);
 
         return sidePots;
     }

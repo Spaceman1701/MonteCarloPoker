@@ -24,7 +24,7 @@ public class PotTest {
         contribution.addContribution(b, 70);
         contribution.addContribution(c, 40);
         contribution.addContribution(d, 140);
-        //contribution.addContribution(e, 60);
+        contribution.addContribution(e, 60);
 
         Pot p = new Pot();
 
@@ -33,5 +33,13 @@ public class PotTest {
         SidePot[] pots = p.getPots();
 
         assert pots.length == 3 : "wrong number of pots = " + pots.length;
+
+        int totalPot = 0;
+
+        for (SidePot pot : pots) {
+            totalPot += pot.getValue();
+        }
+
+        assert totalPot == 140+140+60+40+70 : "wrong total value";
     }
 }

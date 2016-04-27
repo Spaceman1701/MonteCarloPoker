@@ -14,7 +14,11 @@ public class SidePot {
 
     private Set<Player> contributors;
 
-    public SidePot(int value, Player[] contributors) {
+    private int contraValue;
+
+    public SidePot(int value, int contraValue, Player[] contributors) {
+        this.value = value;
+        this.contraValue = contraValue;
         this.contributors = new HashSet<Player>();
         addAllUnfolded(contributors);
     }
@@ -29,6 +33,7 @@ public class SidePot {
 
     public boolean sharesContributors(SidePot other) {
         if (other.getContributors().size() != getContributors().size()) {
+            //System.out.println(contraValue + " not equal size");
             return false;
         }
 
@@ -51,6 +56,10 @@ public class SidePot {
 
     public void addValue(int v) {
         value += v;
+    }
+
+    public int getContraValue() {
+        return contraValue;
     }
 
 }
