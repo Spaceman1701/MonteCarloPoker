@@ -60,7 +60,6 @@ public class Pot {
 
             if (i == pots.size() - 1) {
                 condensedPots.add(potI);
-                System.out.println("add final pot " + potI.getContraValue());
                 break;
             }
 
@@ -68,15 +67,8 @@ public class Pot {
 
             if (potI.sharesContributors(nextPot)) {
                 nextPot.addValue(potI.getValue());
-                //condensedPots.add(nextPot);
-                System.out.println("pot merged " + potI.getContraValue() + " " + potI.getContributors().size());
             } else {
                 condensedPots.add(potI);
-                //condensedPots.add(nextPot);
-                System.out.println("pot added " + potI.getContraValue() + " " + potI.getContributors().size());
-
-                //System.out.println("pot added " + nextPot.getContraValue() + " " + nextPot.getContributors().size());
-               // i++;
             }
         }
 

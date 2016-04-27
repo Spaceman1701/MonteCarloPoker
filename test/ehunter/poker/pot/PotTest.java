@@ -42,4 +42,38 @@ public class PotTest {
 
         assert totalPot == 140+140+60+40+70 : "wrong total value";
     }
+
+
+    @Test
+    public void testGetPotsByContribution() {
+        Contribution contribution = new Contribution();
+
+        Player a = new Player();
+        Player b = new Player();
+        Player c = new Player();
+        Player d = new Player();
+        Player e = new Player();
+        e.fold();
+
+        contribution.addContribution(a, 140);
+        contribution.addContribution(b, 70);
+        contribution.addContribution(c, 40);
+        contribution.addContribution(d, 140);
+        contribution.addContribution(e, 60);
+
+        Pot p = new Pot();
+
+        p.setContributions(contribution);
+
+        SidePot[] pots = p.getPots();
+
+        int bStakes = 0;
+        for (SidePot pot : pots) {
+            if (pot.getContributors().contains(b)) {
+                bStakes++;
+            }
+        }
+
+        assert bStakes == 2;
+    }
 }
