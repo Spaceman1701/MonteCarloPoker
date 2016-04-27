@@ -15,7 +15,7 @@ public class Deck {
     public Deck() {
         cards = new LinkedList<Card>();
         fillDeck();
-        suffleDeck();
+        shuffleDeck();
     }
 
     private void fillDeck() {
@@ -29,7 +29,7 @@ public class Deck {
         }
     }
 
-    public void suffleDeck() {
+    public void shuffleDeck() {
         Collections.shuffle(cards);
     }
 
