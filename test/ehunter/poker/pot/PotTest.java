@@ -76,4 +76,33 @@ public class PotTest {
 
         assert bStakes == 2;
     }
+
+    @Test
+    public void testBet() {
+        Player a = new Player();
+        Player b = new Player();
+        Player c = new Player();
+        Player d = new Player();
+        Player e = new Player();
+        e.fold();
+
+        Pot p = new Pot();
+
+        p.bet(new Bet(a, 140));
+        p.bet(new Bet(b, 70));
+        p.bet(new Bet(c, 40));
+        p.bet(new Bet(d, 140));
+        p.bet(new Bet(e, 60));
+
+        SidePot[] pots = p.getPots();
+
+        int bStakes = 0;
+        for (SidePot pot : pots) {
+            if (pot.getContributors().contains(b)) {
+                bStakes++;
+            }
+        }
+
+        assert bStakes == 2;
+    }
 }
