@@ -5,7 +5,15 @@ package ehunter.poker.player;
  */
 public class Player {
 
-    private boolean folded = false;
+    private boolean folded;
+
+    public Player() {
+        folded = false;
+    }
+
+    public Player(Player copy) {
+        this.folded = copy.isFolded();
+    }
 
     public boolean isFolded() {
         return folded;

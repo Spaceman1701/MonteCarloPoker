@@ -17,6 +17,14 @@ public class Contribution {
         contributions = new HashMap<Player, Integer>();
     }
 
+    public Contribution(Contribution copy) {
+        contributions = new HashMap<Player, Integer>();
+
+        for (Player p : copy.contributions.keySet()) {
+            contributions.put(new Player(p), copy.contributions.get(p));
+        }
+    }
+
     public void addContribution(Player p, int amount) {
         if (contributions.containsKey(p)) {
             contributions.put(p, contributions.get(p) + amount);

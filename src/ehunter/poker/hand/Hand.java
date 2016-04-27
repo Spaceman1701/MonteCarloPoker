@@ -19,6 +19,10 @@ public class Hand {
         Hand.checkValidHand(this);
     }
 
+    public Hand(Hand copy) {
+        this(copy.getCards());
+    }
+
     public void setCard(Card c, int index) {
         cards[index] = c;
     }

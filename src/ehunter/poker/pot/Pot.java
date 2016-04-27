@@ -16,7 +16,10 @@ public class Pot {
 
     public Pot() {
         playerContributions = new Contribution();
+    }
 
+    public Pot(Pot copy) {
+        playerContributions = new Contribution(copy.playerContributions);
     }
 
     protected void setContributions(Contribution c) {
