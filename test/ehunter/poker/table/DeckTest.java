@@ -13,4 +13,17 @@ public class DeckTest {
 
         assert d.getSize() == 52;
     }
+
+    @Test
+    public void testDrawCard() {
+        Deck d = new Deck();
+
+        int i = 0;
+        while(d.isNextCard()) {
+            d.getTopCard();
+            i++;
+        }
+
+        assert i == 52;
+    }
 }

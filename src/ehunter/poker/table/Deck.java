@@ -41,6 +41,10 @@ public class Deck {
         return cards.poll();
     }
 
+    public boolean isNextCard() {
+        return cards.peek() != null;
+    }
+
     public int getSize() {
         return cards.size();
     }
