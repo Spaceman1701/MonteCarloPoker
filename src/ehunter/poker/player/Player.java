@@ -22,4 +22,8 @@ public class Player {
     public void fold() {
         folded = true;
     }
+
+    public void exitRound() {
+
+    }
 }
