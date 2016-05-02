@@ -16,6 +16,10 @@ public class HoleCards {
         Collections.sort(cards, new ValueComparator());
     }
 
+    public HoleCards(HoleCards copy) {
+        cards = new ArrayList<Card>(copy.cards);
+    }
+
     public HoleCards(Card c1, Card c2) {
         this();
         cards.add(c1);

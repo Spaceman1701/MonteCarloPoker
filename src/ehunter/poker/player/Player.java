@@ -17,6 +17,7 @@ public class Player {
 
     public Player(Player copy) {
         this.folded = copy.isFolded();
+        this.holeCards = new HoleCards(copy.holeCards);
     }
 
     public boolean isFolded() {
