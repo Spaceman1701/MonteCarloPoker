@@ -1,11 +1,15 @@
 package ehunter.poker.player;
 
+import ehunter.poker.hand.Hand;
+
 /**
  * Created by 40501 on 4/25/2016.
  */
 public class Player {
 
     private boolean folded;
+
+    private HoleCards holeCards;
 
     public Player() {
         folded = false;
@@ -25,5 +29,13 @@ public class Player {
 
     public void exitRound() {
 
+    }
+
+    public Hand bestHand() {
+        return null; //TODO: IMPLEMENT
+    }
+
+    public Hand[] allPossibleHands() {
+        return null; //TODO: IMPLEMENT
     }
 }

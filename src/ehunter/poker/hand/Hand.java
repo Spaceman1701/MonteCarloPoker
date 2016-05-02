@@ -41,6 +41,23 @@ public class Hand {
         return cards;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o.getClass() == Hand.class) {
+            Hand other = (Hand)o;
+            other.sortByValue();
+            this.sortByValue();
+
+            for (int i = 0; i < 5; i++) {
+                if (!other.cards[i].equals(cards[i])) {
+                    return false;
+                }
+            }
+        }
+
+        return false;
+    }
+
     public static boolean isFullHouse(Hand h) {
         checkValidHand(h);
 

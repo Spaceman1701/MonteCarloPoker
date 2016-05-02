@@ -19,4 +19,15 @@ public class Card {
     public CardSuit getSuit() {
         return suit;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o.getClass() == Card.class) {
+            Card other = (Card)o;
+
+            return other.value == this.value && other.suit == this.suit;
+        }
+
+        return false;
+    }
 }
