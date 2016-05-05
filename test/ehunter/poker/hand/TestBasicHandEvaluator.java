@@ -27,9 +27,6 @@ public class TestBasicHandEvaluator {
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
 
-    public void valueStraightFlushIntra() {
-        //This method probably works since it is just the high card method + a base value
-    }
     @Test
     public void value4OfAKindInBounds() {
         Card[] highest4 = new Card[] {

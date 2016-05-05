@@ -23,21 +23,21 @@ public class BasicHandEvaluator implements HandEvaluator {
     @Override
     public HandValue evaluateHand(Hand h) {
         HandValue v;
-        if (h.isStraight(h) && h.isFlush(h)) { //StraighFlush
+        if (Hand.isStraight(h) && Hand.isFlush(h)) { //StraightFlush
             v = valueStraightFlush(h);
-        } else if (h.is4OfAKind(h)) {
+        } else if (Hand.is4OfAKind(h)) {
             v = value4OfAKind(h);
-        } else if (h.isFullHouse(h)) {
+        } else if (Hand.isFullHouse(h)) {
             v = valueFullHouse(h);
-        } else if (h.isFlush(h)) {
+        } else if (Hand.isFlush(h)) {
             v = valueFlush(h);
-        } else if (h.isStraight(h)) {
+        } else if (Hand.isStraight(h)) {
             v = valueStraight(h);
-        } else if (h.is3OfAKind(h)) {
+        } else if (Hand.is3OfAKind(h)) {
             v = value3OfAKind((h));
-        } else if (h.is2Pair(h)) {
+        } else if (Hand.is2Pair(h)) {
             v = value2Pair(h);
-        } else if (h.isPair(h)) {
+        } else if (Hand.isPair(h)) {
             v = valuePair(h);
         } else { //High card. Bad hand
             v = valueHighCard(h);

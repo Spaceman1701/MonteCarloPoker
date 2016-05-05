@@ -79,7 +79,7 @@ public class HandTest {
     @Test
     public void testInvalidHandConstructed() {
         expectedEx.expect(InvalidHandException.class);
-        Hand h = new Hand(new Card[] {new Card(CardValue.JACK, CardSuit.CLUBS)});
+        new Hand(new Card[] {new Card(CardValue.JACK, CardSuit.CLUBS)});
     }
 
     @Test
@@ -173,7 +173,7 @@ public class HandTest {
 
         Hand h2 = new Hand(HIGH_CARD);
 
-        assert !h2.is2Pair(h2);
+        assert !Hand.is2Pair(h2);
     }
 
     @Test
