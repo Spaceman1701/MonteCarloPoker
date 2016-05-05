@@ -7,8 +7,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -66,7 +64,7 @@ public class PlayerTest {
 
         p.setHoleCards(new HoleCards(holeCards));
 
-        Hand h = p.bestHand();
+        Hand h = p.getBestHand();
 
         HandValue bestHandValue = game.getHandEvaluator().evaluateHand(h);
         HandValue expectedHandValue = game.getHandEvaluator().evaluateHand(new Hand(playerFullHouse));

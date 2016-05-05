@@ -65,9 +65,13 @@ public class Player {
 
     }
 
-    public Hand bestHand() {
+    public Hand getBestHand() {
         Set<Card> communityCards = game.getCommunityCards();
 
+        return getBestHand(communityCards);
+    }
+
+    public Hand getBestHand(Set<Card> communityCards) {
         Card[] cards = new Card[7];
         cards[5] = holeCards.getFirst();
         cards[6] = holeCards.getSecond();
@@ -91,12 +95,8 @@ public class Player {
             }
         }
 
-        return bestHand; //TODO: IMPLEMENT
+        return bestHand;
     }
-
-
-
-
 
     public Hand[] allPossibleHands() {
         return null; //TODO: IMPLEMENT
