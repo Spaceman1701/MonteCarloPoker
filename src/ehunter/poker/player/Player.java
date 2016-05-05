@@ -21,6 +21,8 @@ public class Player {
 
     public Game game;
 
+    private boolean dealer;
+
     public Player() {
         folded = false;
     }
@@ -96,6 +98,14 @@ public class Player {
         }
 
         return bestHand;
+    }
+
+    public boolean isDealer() {
+        return dealer;
+    }
+
+    public void setDealer(boolean dealer) {
+        this.dealer = dealer;
     }
 
     public Hand[] allPossibleHands() {
