@@ -8,12 +8,17 @@ import java.util.Comparator;
 public class ValueComparator implements Comparator<Card> {
 
     public int compare(Card c1, Card c2) {
+
+        if (c1.equals(c2)) {
+            return 0;
+        }
+
         if (c1.getValue().getSortingValue() > c2.getValue().getSortingValue()) {
             return 1;
         } else if (c1.getValue().getSortingValue() < c2.getValue().getSortingValue()) {
             return -1;
+        } else { //if they are equal value, compare by suit
+            return new SuitComparator().compare(c1, c2);
         }
-
-        return 0;
     }
 }

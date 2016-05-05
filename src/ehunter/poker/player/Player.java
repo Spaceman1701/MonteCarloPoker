@@ -4,6 +4,7 @@ import ehunter.poker.hand.Card;
 import ehunter.poker.hand.Hand;
 import ehunter.poker.table.Game;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -56,6 +57,10 @@ public class Player {
         return holeCards;
     }
 
+    public void setHoleCards(HoleCards holeCards) {
+        this.holeCards = holeCards;
+    }
+
     public void exitRound() {
 
     }
@@ -73,32 +78,25 @@ public class Player {
             i++;
         }
 
+        Set<Hand> allHands = Hand.getAllHands(cards);
 
+        Hand bestHand = null;
+        int bestValue = - 1;
 
-        return null; //TODO: IMPLEMENT
-    }
-
-    private Set<Card[]> getAllHands(Card[] input) {
-        Set<Card[]> hands = new HashSet<Card[]>();
-
-        int[] indicies = new int[5];
-
-        hands.add(getHandFromIndicies(input, new int[] {0, 1, 2, 3, 4}));
-
-        for (;;) {
-            int i;
-            
-        }
-    }
-
-    private Card[] getHandFromIndicies(Card[] input, int[] indicies) {
-        Card[] result = new Card[5];
-        for (int i = 0; i < 5; i++) {
-            result[i] = input[indicies[i]];
+        for (Hand h : allHands) {
+            int hValue = game.getHandEvaluator().evaluateHand(h).getValue();
+            if (hValue > bestValue) {
+                bestHand = h;
+                bestValue = hValue;
+            }
         }
 
-        return result;
+        return bestHand; //TODO: IMPLEMENT
     }
+
+
+
+
 
     public Hand[] allPossibleHands() {
         return null; //TODO: IMPLEMENT

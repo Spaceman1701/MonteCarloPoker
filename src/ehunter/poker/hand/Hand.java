@@ -1,6 +1,8 @@
 package ehunter.poker.hand;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by 40501 on 4/14/2016.
@@ -201,5 +203,46 @@ public class Hand {
         }
 
         return values;
+    }
+
+    public static Set<Hand> getAllHands(Card[] input) {
+        int handSize = 5;
+
+        Set<Hand> hands = new HashSet<Hand>();
+
+        int[] indices = new int[handSize];
+
+        for (int i = 0; i < handSize; i++) {
+            indices[i] = i;
+        }
+
+        hands.add(new Hand(getHandFromIndicies(input, indices)));
+
+        int i = 0;
+        while(i > -1) {
+            for (i = handSize - 1; i >= 0 && indices[i] == input.length - handSize + i; i--)
+                continue;
+            if (i < 0) {
+                break;
+            } else {
+                indices[i] ++;
+                for (++i; i < handSize; i++) {
+                    indices[i] = indices[i - 1] + 1;
+                }
+                hands.add(new Hand(getHandFromIndicies(input, indices)));
+            }
+
+        }
+
+        return hands;
+    }
+
+    private static Card[] getHandFromIndicies(Card[] input, int[] indicies) {
+        Card[] result = new Card[5];
+        for (int i = 0; i < 5; i++) {
+            result[i] = input[indicies[i]];
+        }
+
+        return result;
     }
 }

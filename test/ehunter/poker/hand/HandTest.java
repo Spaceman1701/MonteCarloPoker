@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import java.util.Arrays;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -217,6 +218,36 @@ public class HandTest {
     }
 
     @Test
+    public void testSortBySuitFallBack() {
+        Card[] input = new Card[]{
+                new Card(CardValue.JACK, CardSuit.HEARTS),
+                new Card(CardValue.KING, CardSuit.HEARTS),
+                new Card(CardValue.THREE, CardSuit.HEARTS),
+                new Card(CardValue.QUEEN, CardSuit.HEARTS),
+                new Card(CardValue.ACE, CardSuit.HEARTS)
+        };
+
+        Card[] expected = new Card[]{
+                new Card(CardValue.THREE, CardSuit.HEARTS),
+                new Card(CardValue.JACK, CardSuit.HEARTS),
+                new Card(CardValue.QUEEN, CardSuit.HEARTS),
+                new Card(CardValue.KING, CardSuit.HEARTS),
+                new Card(CardValue.ACE, CardSuit.HEARTS)
+        };
+
+        Hand h = new Hand(input);
+
+        h.sortBySuit();
+
+        Card[] result = h.getCards();
+
+        for (int i = 0; i < result.length; i++) {
+            //assert result[i].getValue() == expected[i].getValue();
+            assert result[i].getSuit() == expected[i].getSuit() : result[i].toString();
+        }
+    }
+
+    @Test
     public void testSortByValue() {
         Card[] expected = new Card[]{
                 new Card(CardValue.TWO, CardSuit.HEARTS),
@@ -234,6 +265,36 @@ public class HandTest {
 
         for (int i = 0; i < result.length; i++) {
             assert result[i].getValue() == expected[i].getValue();
+            //assert result[i].getSuit() == expected[i].getSuit(); -- May fail even if method works correctly
+        }
+    }
+
+    @Test
+    public void testSortByValueFallBack() {
+        Card[] input = new Card[]{
+                new Card(CardValue.TWO, CardSuit.HEARTS),
+                new Card(CardValue.TEN, CardSuit.CLUBS),
+                new Card(CardValue.TEN, CardSuit.HEARTS),
+                new Card(CardValue.ACE, CardSuit.HEARTS),
+                new Card(CardValue.ACE, CardSuit.DIAMONDS)
+        };
+
+        Card[] expected = new Card[]{
+                new Card(CardValue.TWO, CardSuit.HEARTS),
+                new Card(CardValue.TEN, CardSuit.CLUBS),
+                new Card(CardValue.TEN, CardSuit.HEARTS),
+                new Card(CardValue.ACE, CardSuit.DIAMONDS),
+                new Card(CardValue.ACE, CardSuit.HEARTS)
+        };
+
+        Hand h = new Hand(input);
+
+        h.sortByValue();
+
+        Card[] result = h.getCards();
+
+        for (int i = 0; i < result.length; i++) {
+            assert result[i].getValue() == expected[i].getValue() : result[i].toString();
             //assert result[i].getSuit() == expected[i].getSuit(); -- May fail even if method works correctly
         }
     }
@@ -294,5 +355,22 @@ public class HandTest {
 
             assert result[i] == expected[i];
         }
+    }
+
+    @Test
+    public void testGetAllHands() {
+        Card[] FULL_HOUSE_IN_SEVEN = new Card[]{
+                new Card(CardValue.ACE, CardSuit.CLUBS),
+                new Card(CardValue.ACE, CardSuit.DIAMONDS),
+                new Card(CardValue.ACE, CardSuit.HEARTS),
+                new Card(CardValue.TEN, CardSuit.SPADES),
+                new Card(CardValue.TEN, CardSuit.HEARTS),
+                new Card(CardValue.JACK, CardSuit.CLUBS),
+                new Card(CardValue.FOUR, CardSuit.SPADES)
+        };
+
+        Set<Hand> hands = Hand.getAllHands(FULL_HOUSE_IN_SEVEN);
+
+        assert hands.size() == 21 : "Wrong number of hands";
     }
 }
