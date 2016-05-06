@@ -175,6 +175,8 @@ public class DeadChipPotDistributorTest {
                 new Card(CardValue.SIX, CardSuit.SPADES)));
         highCardPlayer.fold();
 
+
+
         Game game = new Game();
         TestUtilities.assignCommunityCards(game, tableCards);
 
@@ -220,7 +222,76 @@ public class DeadChipPotDistributorTest {
 
     @Test
     public void testDistributePotAmoungPlayersMultiplePotsMultipleWinners() {
+        Card[] tableCards = new Card[] {
+                new Card(CardValue.ACE, CardSuit.CLUBS),
+                new Card(CardValue.QUEEN, CardSuit.HEARTS),
+                new Card(CardValue.TEN, CardSuit.DIAMONDS),
+                new Card(CardValue.TWO, CardSuit.CLUBS),
+                new Card(CardValue.SEVEN, CardSuit.CLUBS)
+        };
 
+        Player straightPlayer = new Player();
+        straightPlayer.setHoleCards(new HoleCards(new Card(CardValue.KING, CardSuit.DIAMONDS),
+                new Card(CardValue.JACK, CardSuit.HEARTS)));
+
+        Player threeOfAKindPlayer = new Player();
+        threeOfAKindPlayer.setHoleCards(new HoleCards(new Card(CardValue.QUEEN, CardSuit.CLUBS), new Card(CardValue.QUEEN,
+                CardSuit.HEARTS)));
+
+        Player highCardPlayer = new Player();
+        highCardPlayer.setHoleCards(new HoleCards(new Card(CardValue.FOUR, CardSuit.HEARTS),
+                new Card(CardValue.SIX, CardSuit.SPADES)));
+        highCardPlayer.fold();
+
+        Player flushPlayer = new Player(); //SHOULD WIN
+        flushPlayer.setHoleCards(new HoleCards(new Card(CardValue.THREE, CardSuit.CLUBS), new Card(CardValue.FOUR,
+                CardSuit.CLUBS)));
+
+        Game game = new Game();
+        TestUtilities.assignCommunityCards(game, tableCards);
+
+        straightPlayer.game = game;
+        threeOfAKindPlayer.game = game;
+        highCardPlayer.game = game;
+        flushPlayer.game = game;
+
+        Pot pot = new Pot();
+
+        pot.bet(new Bet(straightPlayer, 100));
+        pot.bet(new Bet(threeOfAKindPlayer, 100));
+        pot.bet(new Bet(flushPlayer, 50));
+        pot.bet(new Bet(highCardPlayer, 10));
+
+        DeadChipPotDistributor distributor = new DeadChipPotDistributor();
+
+        Collection<Winnings> winnings =
+                distributor.distributePotAmongPlayers(pot, new Player[]{straightPlayer, threeOfAKindPlayer,
+                        highCardPlayer, flushPlayer});
+
+        assert winnings.size() == 2 : "wrong size winnings set: " + winnings.size();
+
+        for (Winnings w : winnings) {
+            Player p = w.getTargetPlayer();
+            int chips = w.getChips();
+            boolean deadChips = w.isDeadChips();
+
+            assert !deadChips;
+
+            boolean foundPlayer = false;
+            if (p == straightPlayer) {
+                foundPlayer = true;
+                assert chips == 100;
+            } else if (p == threeOfAKindPlayer) {
+                foundPlayer = true;
+                assert chips == 0;
+            } else if (p == highCardPlayer) {
+                foundPlayer = true;
+                assert chips == 0;
+            } else if (p == flushPlayer) {
+                foundPlayer = true;
+                assert chips == 160;
+            }
+        }
     }
 
 }
