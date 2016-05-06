@@ -1,6 +1,21 @@
 package ehunter.poker.pot.potdistributor;
 
+import ehunter.poker.TestUtilities;
+import ehunter.poker.hand.CardSuit;
+import ehunter.poker.hand.CardValue;
+import ehunter.poker.hand.HandTest;
+import ehunter.poker.player.HoleCards;
+import ehunter.poker.player.Player;
+import ehunter.poker.pot.Bet;
+import ehunter.poker.pot.Pot;
+import ehunter.poker.pot.Winnings;
+import ehunter.poker.table.Game;
 import org.junit.Test;
+
+import ehunter.poker.hand.Card;
+
+import java.util.Calendar;
+import java.util.Collection;
 
 /**
  * Created by 40501 on 5/5/2016.
@@ -9,6 +24,66 @@ public class DeadChipPotDistributorTest {
 
     @Test
     public void testDistributePotAmongPlayersOneWinner() {
+        Card[] tableCards = new Card[] {
+                new Card(CardValue.ACE, CardSuit.CLUBS),
+                new Card(CardValue.QUEEN, CardSuit.HEARTS),
+                new Card(CardValue.TEN, CardSuit.DIAMONDS),
+                new Card(CardValue.TWO, CardSuit.CLUBS),
+                new Card(CardValue.SEVEN, CardSuit.CLUBS)
+        };
+
+        Player straightPlayer = new Player();
+        straightPlayer.setHoleCards(new HoleCards(new Card(CardValue.KING, CardSuit.DIAMONDS),
+                new Card(CardValue.JACK, CardSuit.HEARTS)));
+
+        Player flushPlayer = new Player(); //SHOULD WIN
+        flushPlayer.setHoleCards(new HoleCards(new Card(CardValue.THREE, CardSuit.CLUBS), new Card(CardValue.FOUR,
+                CardSuit.CLUBS)));
+
+        Player highCardPlayer = new Player();
+        highCardPlayer.setHoleCards(new HoleCards(new Card(CardValue.FOUR, CardSuit.HEARTS),
+                new Card(CardValue.SIX, CardSuit.SPADES)));
+        highCardPlayer.fold();
+
+        Game game = new Game();
+        TestUtilities.assignCommunityCards(game, tableCards);
+
+        straightPlayer.game = game;
+        flushPlayer.game = game;
+        highCardPlayer.game = game;
+
+        Pot pot = new Pot();
+
+        pot.bet(new Bet(straightPlayer, 100));
+        pot.bet(new Bet(flushPlayer, 100));
+        pot.bet(new Bet(highCardPlayer, 10));
+
+        DeadChipPotDistributor distributor = new DeadChipPotDistributor();
+
+        Collection<Winnings> winnings =
+                distributor.distributePotAmongPlayers(pot, new Player[]{straightPlayer, flushPlayer, highCardPlayer});
+
+        assert winnings.size() == 1 : "wrong size winnings set: " + winnings.size();
+
+        for (Winnings w : winnings) {
+            Player p = w.getTargetPlayer();
+            int chips = w.getChips();
+            boolean deadChips = w.isDeadChips();
+
+            assert !deadChips;
+
+            boolean foundPlayer = false;
+            if (p == straightPlayer) {
+                foundPlayer = true;
+                assert chips == 0;
+            } else if (p == flushPlayer) {
+                foundPlayer = true;
+                assert chips == 210;
+            } else if (p == highCardPlayer) {
+                foundPlayer = true;
+                assert chips == 0;
+            }
+        }
 
     }
 
@@ -19,6 +94,11 @@ public class DeadChipPotDistributorTest {
 
     @Test
     public void testDistributePotAmongPlayersMultipleWinnersOddChips() {
+
+    }
+
+    @Test
+    public void testDistributePotAmoungPlayersMultiplePotsMultipleWinners() {
 
     }
 

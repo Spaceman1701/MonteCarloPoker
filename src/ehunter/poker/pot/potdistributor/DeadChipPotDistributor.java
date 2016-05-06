@@ -55,7 +55,9 @@ public class DeadChipPotDistributor implements PotDistributor {
                 winningsSet.add(Winnings.createPlayerWinnings(p, valuePerPlayer));
             }
 
-            winningsSet.add(Winnings.createDeadChips(oddChips));
+            if (oddChips != 0) {
+                winningsSet.add(Winnings.createDeadChips(oddChips));
+            }
         }
 
         return winningsSet;

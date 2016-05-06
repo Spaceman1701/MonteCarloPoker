@@ -1,5 +1,6 @@
 package ehunter.poker.player;
 
+import ehunter.poker.TestUtilities;
 import ehunter.poker.hand.*;
 import ehunter.poker.table.Game;
 import org.junit.Rule;
@@ -48,16 +49,7 @@ public class PlayerTest {
 
         //full house possible, 3 ace and 2 tens
 
-        Set<Card> communityCards = new TreeSet<Card>(new ValueComparator());
-
-        for (Card c : tableCards) {
-            communityCards.add(c);
-        }
-
-        Field field = Game.class.getDeclaredField("communityCards");
-        field.setAccessible(true);
-        field.set(game, communityCards);
-
+        TestUtilities.assignCommunityCards(game, tableCards);
         assert game.getCommunityCards().size() == 5 : "community cards failed to set";
 
         p.game = game;
