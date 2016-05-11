@@ -10,12 +10,16 @@ import java.util.*;
  * Created by 40501 on 4/27/2016.
  */
 public class Deck {
-    private LinkedList<Card> cards;
+    private Random rand;
+    private List<Card> cards;
+    private Set<Card> drawnCards;
 
     public Deck() {
         cards = new LinkedList<Card>();
+        drawnCards = new HashSet<Card>();
         fillDeck();
-        shuffleDeck();
+        rand = new Random();
+        //shuffleDeck();
     }
 
     private void fillDeck() {
@@ -29,20 +33,28 @@ public class Deck {
         }
     }
 
-    public void shuffleDeck() {
-        Collections.shuffle(cards);
-    }
-
     public List<Card> getCards() {
         return cards;
     }
 
-    public Card getTopCard() {
-        return cards.poll();
+    public Card getRandomCard() {
+        int index = rand.nextInt(cards.size());
+        Card c = cards.remove(index);
+        drawnCards.add(c);
+        return c;
+    }
+
+    public boolean removeCard(Card card) {
+        if (cards.remove(card)) {
+            drawnCards.add(card);
+            return true;
+        }
+
+        return false;
     }
 
     public boolean isNextCard() {
-        return cards.peek() != null;
+        return cards.size() != 0;
     }
 
     public int getSize() {
