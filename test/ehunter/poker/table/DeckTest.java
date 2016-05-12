@@ -20,7 +20,7 @@ public class DeckTest {
 
         int i = 0;
         while(d.isNextCard()) {
-            d.getTopCard();
+            d.getRandomCard();
             i++;
         }
 

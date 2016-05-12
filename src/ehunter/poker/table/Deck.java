@@ -19,7 +19,12 @@ public class Deck {
         drawnCards = new HashSet<Card>();
         fillDeck();
         rand = new Random();
-        //shuffleDeck();
+    }
+
+    public Deck(Deck copy) {
+        this.rand = copy.rand;
+        cards = new LinkedList<Card>(copy.cards);
+        drawnCards = new HashSet<Card>(copy.cards);
     }
 
     private void fillDeck() {
@@ -59,5 +64,13 @@ public class Deck {
 
     public int getSize() {
         return cards.size();
+    }
+
+    public double getProbabilityAtLeastOne(Card[] cards) {
+        return 0;
+    }
+
+    public double getProbabilityAll(Card[] cards) {
+        return 0;
     }
 }
