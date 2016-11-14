@@ -1,2 +1,2 @@
 # MonteCarloPoker
-Poker agent. Probably not going to be great...
+Poker agent I was working on before college. Still unfinished, but I plan to come back to it.
